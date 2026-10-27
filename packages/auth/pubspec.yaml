@@ -1,0 +1,13 @@
+name: auth
+description: Authentication and session management for POS
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  core_models:
+    path: ../core_models
+  permissions:
+    path: ../permissions

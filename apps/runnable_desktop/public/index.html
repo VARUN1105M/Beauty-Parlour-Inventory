@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Heritage - Beauty, Bridal & Fashion Jewellery POS</title>
+  <style>
+    :root {
+      --primary: #8B1E3F;
+      --primary-dark: #6D142F;
+      --primary-light: #FDF2F4;
+      --gold: #D4AF37;
+      --gold-dark: #B8860B;
+      --gold-light: #FEF9E7;
+      --dark: #1E293B;
+      --gray-50: #F8FAFC;
+      --gray-100: #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-300: #CBD5E1;
+      --gray-400: #94A3B8;
+      --gray-500: #64748B;
+      --gray-700: #334155;
+      --success: #10B981;
+      --success-light: #ECFDF5;
+      --warning: #F59E0B;
+      --warning-light: #FFFBEB;
+      --danger: #EF4444;
+      --danger-light: #FEF2F2;
+      --sidebar-width: 250px;
+      --header-height: 64px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gray-50);
+      color: var(--dark);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: var(--sidebar-width);
+      background-color: #111827;
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-right: 1px solid #1F2937;
+      z-index: 20;
+    }
+
+    .brand-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #1F2937;
+      background: linear-gradient(135deg, #1F2937, #111827);
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--gold), var(--primary));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-weight: bold;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .brand-title h1 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #FFF;
+      text-transform: uppercase;
+    }
+
+    .brand-title p {
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 8px;
+    }
+
+    .nav-group-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748B;
+      padding: 12px 12px 6px 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #94A3B8;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background-color: #1F2937;
+      color: #FFF;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: #FFF;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(139, 30, 63, 0.4);
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .badge-count {
+      margin-left: auto;
+      background-color: var(--primary);
+      color: #FFF;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* MAIN CONTAINER */
+    #main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* TOP HEADER */
+    #top-bar {
+      height: var(--header-height);
+      background-color: #FFF;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .hardware-status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hw-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background-color: var(--success-light);
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+
+    .hw-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #10B981;
+      box-shadow: 0 0 6px #10B981;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .role-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--gray-100);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--gray-300);
+    }
+
+    .role-switcher select {
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #FFF;
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #FFF;
+    }
+    .btn-gold:hover {
+      opacity: 0.95;
+    }
+
+    .btn-outline {
+      border-color: var(--gray-300);
+      background-color: #FFF;
+      color: var(--gray-700);
+    }
+    .btn-outline:hover {
+      background-color: var(--gray-100);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    /* CONTENT VIEW */
+    #content-view {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    /* CARDS & GRIDS */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #FFF;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: var(--primary);
+    }
+
+    .stat-card.gold::before {
+      background-color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--dark);
+      margin: 8px 0 4px 0;
+    }
+
+    .stat-sub {
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    /* POS TWO-COLUMN LAYOUT */
+    .pos-layout {
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 20px;
+      height: calc(100vh - var(--header-height) - 48px);
+    }
+
+    .catalog-panel {
+      background: #FFF;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .catalog-search-bar {
+      padding: 16px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      gap: 12px;
+      background: #FAFBFD;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 30, 63, 0.15);
+    }
+
+    .barcode-trigger-btn {
+      background: #111827;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 0 16px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--gray-200);
+      overflow-x: auto;
+      background: #FFF;
+    }
+
+    .cat-pill {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--gray-100);
+      color: var(--gray-700);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .cat-pill.active {
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    .product-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: #FFF;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(139, 30, 63, 0.08);
+    }
+
+    .p-category {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .p-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 4px 0 8px 0;
+      line-height: 1.3;
+    }
+
+    .p-tag {
+      font-size: 11px;
+      color: var(--gray-500);
+      font-family: monospace;
+    }
+
+    .p-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--gray-200);
+    }
+
+    .p-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .p-stock-badge {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .stock-ok { background: #ECFDF5; color: #047857; }
+    .stock-low { background: #FEF2F2; color: #B91C1C; font-weight: 700; }
+
+    /* CART PANEL */
+    .cart-panel {
+      background: #FFF;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .cart-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FAFBFD;
+    }
+
+    .cart-customer-selector {
+      padding: 10px 18px;
+      background: var(--gold-light);
+      border-bottom: 1px solid #FDE68A;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .ci-info {
+      flex: 1;
+      padding-right: 12px;
+    }
+    .ci-title { font-size: 13px; font-weight: 600; color: var(--dark); }
+    .ci-price { font-size: 12px; color: var(--gray-500); }
+
+    .ci-qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid var(--gray-300);
+      background: #FFF;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .qty-val {
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .ci-total {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .ci-del {
+      margin-left: 10px;
+      color: var(--gray-400);
+      cursor: pointer;
+    }
+    .ci-del:hover { color: var(--danger); }
+
+    .cart-summary {
+      padding: 16px 18px;
+      background: #FAFBFD;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+
+    .sum-row.total-row {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 2px solid var(--gray-300);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .cart-actions {
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: #FFF;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    /* TABLE LAYOUT */
+    .data-table-wrap {
+      background: #FFF;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .table-top-bar {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--gray-200);
+      background: #FAFBFD;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    table.data-table th {
+      background: #F8FAFC;
+      padding: 12px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    table.data-table td {
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--dark);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    table.data-table tr:hover {
+      background-color: var(--gray-50);
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+
+    .modal-backdrop.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-box {
+      background: #FFF;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #FFF;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background: #FAFBFD;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 30, 63, 0.15);
+    }
+
+    /* THERMAL RECEIPT PREVIEW */
+    .thermal-receipt {
+      background: #FFF;
+      border: 1px dashed #CBD5E1;
+      padding: 24px 20px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      color: #111;
+      max-width: 320px;
+      margin: 0 auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .receipt-header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .receipt-divider {
+      border-top: 1px dashed #888;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside id="sidebar">
+    <div class="brand-header">
+      <div class="brand-logo">R</div>
+      <div class="brand-title">
+        <h1>Royal Heritage</h1>
+        <p>Bridal & Jewellery POS</p>
+      </div>
+    </div>
+
+    <div class="nav-list">
+      <div class="nav-group-title">Point of Sale</div>
+      <div class="nav-item active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="switchView('pos')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span>Sales (POS Checkout)</span>
+      </div>
+      <div class="nav-item" onclick="switchView('returns')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H4m0 0l4 4m-4-4l4-4m12 12a9 9 0 110-18 9 9 0 010 18z"/></svg>
+        <span>Returns & Refunds</span>
+      </div>
+
+      <div class="nav-group-title">Bridal & Salon</div>
+      <div class="nav-item" onclick="switchView('bridal')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>Bridal Projects & Leads</span>
+        <span class="badge-count" id="bp-badge">2</span>
+      </div>
+      <div class="nav-item" onclick="switchView('appointments')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span>Appointments & Services</span>
+        <span class="badge-count" id="apt-badge">2</span>
+      </div>
+      <div class="nav-item" onclick="switchView('customers')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>Customers CRM</span>
+      </div>
+
+      <div class="nav-group-title">Stock & Purchasing</div>
+      <div class="nav-item" onclick="switchView('inventory')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <span>Inventory & Jewellery</span>
+      </div>
+      <div class="nav-item" onclick="switchView('adjustments')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        <span>Stock Adjustments</span>
+      </div>
+      <div class="nav-item" onclick="switchView('purchasing')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span>Purchase Orders (POs)</span>
+      </div>
+
+      <div class="nav-group-title">Operations & Admin</div>
+      <div class="nav-item" onclick="switchView('dayclose')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>Day Close (Cashup)</span>
+      </div>
+      <div class="nav-item" onclick="switchView('shifts')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Attendance & Shifts</span>
+      </div>
+      <div class="nav-item" onclick="switchView('reports')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Reports & Analytics</span>
+      </div>
+      <div class="nav-item" onclick="switchView('settings')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Settings & Audit Trail</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN APP CONTAINER -->
+  <main id="main-container">
+    <!-- TOP APP BAR -->
+    <header id="top-bar">
+      <div class="header-left">
+        <h2 class="header-title" id="page-title">Executive Dashboard</h2>
+        <div class="hardware-status-bar">
+          <div class="hw-badge" title="Epson TM-T88VI Thermal Printer on USB001">
+            <span class="hw-dot"></span>
+            <span>Printer Ready</span>
+          </div>
+          <div class="hw-badge" title="Honeywell 1900g 2D Barcode Scanner HID">
+            <span class="hw-dot"></span>
+            <span>Scanner Ready</span>
+          </div>
+          <div class="hw-badge" title="APG Vasario RJ11 Cash Drawer Port">
+            <span class="hw-dot"></span>
+            <span>Drawer Monitored</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Live Role Switcher (RBAC) -->
+        <div class="role-switcher" title="Switch active user profile to test permissions">
+          <span>Role:</span>
+          <select id="role-select" onchange="onRoleChange(this.value)">
+            <option value="store_manager">Store Manager (Admin)</option>
+            <option value="bridal_manager">Bridal Manager</option>
+            <option value="inventory_manager">Inventory Manager</option>
+            <option value="receptionist">Receptionist</option>
+            <option value="cashier">Cashier</option>
+          </select>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="triggerDrawerKick()" title="Simulate ESC/POS Kick to Cash Drawer RJ11 pin">
+          Kick Drawer
+        </button>
+        <button class="btn btn-gold btn-sm" onclick="switchView('pos')">
+          + New Sale (F2)
+        </button>
+      </div>
+    </header>
+
+    <!-- DYNAMIC CONTENT VIEW -->
+    <section id="content-view">
+      <!-- Injected dynamically by app.js -->
+    </section>
+  </main>
+
+  <!-- MODAL CONTAINER -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-box" id="modal-box">
+      <!-- Modal header and body injected dynamically -->
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

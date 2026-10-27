@@ -1,0 +1,25 @@
+name: mobile_app
+description: Customer and Owner Companion Mobile App for Bridal Salon & Jewellery
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  core_models:
+    path: ../../packages/core_models
+  api_client:
+    path: ../../packages/api_client
+  auth:
+    path: ../../packages/auth
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

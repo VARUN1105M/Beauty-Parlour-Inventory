@@ -1,0 +1,11 @@
+name: permissions
+description: Role-based Access Control (RBAC) matrix for Beauty, Bridal & Jewellery POS
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  core_models:
+    path: ../core_models
